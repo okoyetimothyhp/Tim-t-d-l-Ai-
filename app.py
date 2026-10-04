@@ -2,20 +2,28 @@ import streamlit as st
 import datetime
 from groq import Groq
 
-st.set_page_config(page_title="Timôteé däl Ai", page_icon="🤖", layout="centered")
+st.set_page_config(page_title="Timôteé däl Ai", page_icon="🧠", layout="centered")
 
 st.markdown("""
 <style>
-h1 { color: #4338ca; text-align: center; font-weight: 900; font-size: 3em; }
-.stButton>button { background: linear-gradient(90deg, #667eea, #764ba2); color: white!important; width: 100%; border-radius: 25px; font-weight: bold; padding: 15px; }
-.chat-you { background: #c7d2fe; padding: 12px; border-radius: 15px; margin: 8px 0; color: #1e1b4b!important; font-weight: 600; }
-.chat-ai { background: #ffffff; padding: 15px; border-radius: 15px; border-left: 5px solid #667eea; margin: 8px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.2); color: #000000!important; }
+h1 { color: #0a3d8f; text-align: center; font-weight: 900; font-size: 2.8em; margin-top: -20px; }
+.stButton>button { background: linear-gradient(90deg, #0a3d8f, #2d8cff); color: white!important; width: 100%; border-radius: 25px; font-weight: bold; padding: 15px; border: none; }
+.chat-you { background: #dbeafe; padding: 12px; border-radius: 15px; margin: 8px 0; color: #1e1b4b!important; font-weight: 600; }
+.chat-ai { background: #ffffff; padding: 15px; border-radius: 15px; border-left: 5px solid #0a3d8f; margin: 8px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.2); color: #000000!important; }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h1>🤖 Timôteé däl Ai</h1>", unsafe_allow_html=True)
+# --- AI PROFILE LOGO ---
+try:
+    col1, col2, col3 = st.columns([1,2,1])
+    with col2:
+        st.image("logo.png", use_container_width=True)
+except:
+    st.markdown("<h1 style='text-align:center;'>🧠</h1>", unsafe_allow_html=True)
+
+st.markdown("<h1>Timôteé däl Ai</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center; font-weight:bold; color:#555;'>By CEO Timothy Okoye | SS3B Igboukwu | Okoye Family Crest 👑</p>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center;'>🌐 Family Motto: Unity, Wisdom & Progress | 🛡️ Well Organized App</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#0a3d8f; font-weight:700;'>🌐 Family Motto: Unity, Wisdom & Progress | 🛡️ Well Organized App</p>", unsafe_allow_html=True)
 
 st.success("📚 TEACHER: Type 'Computer Networking' to see my SS3B Assignment!")
 
@@ -30,33 +38,40 @@ except:
     client = None
 
 NETWORKING_ASSIGNMENT = """
-**TOPIC: Computer Networking: Meaning, Purpose, Importance and Benefits**
-**By: Okoye Timothy - SS3B Igboukwu**
+**COMPUTER NETWORKING: Meaning, Purpose, Importance and Benefits**
+**By: Okoye Timothy Chukwuebuka - SS3B Igboukwu**
 
-**What is Computer Networking?**
+**1. MEANING:**
 Computer Networking is the connection of two or more computers together to share information and resources.
 
-**Purpose:**
-1. Resource Sharing: One printer shared saves money.
-2. Communication: Email, WhatsApp, video calls.
-3. Collaboration: Many students work on same project via Google Docs.
+**2. PURPOSE:**
+- Resource Sharing: One printer for many computers.
+- Communication: Email, WhatsApp, Video Calls.
+- Collaboration: Many students work on same project via Google Docs.
 
-**Core Concepts:**
+**3. CORE CONCEPTS:**
 Meaning, How Computers are Networked (Cables, Wi-Fi, Switch, Router), Resource Sharing, Communication, Collaboration.
 
-**Importance and Benefits:**
-Fast sharing, reduces cost, remote access, learning via YouTube, Banking via Opay, supports my AI project.
+**4. IMPORTANCE & BENEFITS:**
+- Fast file sharing
+- Reduces cost
+- Remote access to school files
+- Learning via YouTube
+- Banking via Opay
+- Supports my AI project (Without network, Timôteé cannot work)
 
-**Examples:** LAN - School Lab, WAN - Internet, PAN - Bluetooth, MAN - Igboukwu town.
+**5. EXAMPLES:**
+LAN - School Computer Lab, WAN - Internet, PAN - Bluetooth, MAN - Igboukwu town network.
 
-**Conclusion:** Networking changed world. Without it my AI cannot work.
+**6. CONCLUSION:**
+Networking changed the world. It connects Igboukwu to the whole world.
 """
 
 for msg in st.session_state.messages:
     if msg["role"] == "user":
         st.markdown(f"<div class='chat-you'>👤 <b>You:</b> {msg['content']}</div>", unsafe_allow_html=True)
     else:
-        st.markdown(f"<div class='chat-ai'>🤖 <b>Timôteé:</b><br>{msg['content']}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='chat-ai'>🧠 <b>Timôteé:</b><br>{msg['content']}</div>", unsafe_allow_html=True)
 
 question = st.text_input("💬 Ask me anything (try: 'Computer Networking'):")
 
@@ -64,15 +79,15 @@ def get_answer(q):
     ql = q.lower()
     if "network" in ql or "assignment" in ql or "ss3b" in ql:
         return NETWORKING_ASSIGNMENT
-    if "who built you" in ql or "who created you" in ql:
-        return "I was built by **CEO Timothy Okoye**, SS3B Igboukwu! From Okoye Family - Motto: Unity, Wisdom & Progress! 👑"
+    if "who built you" in ql or "who created you" in ql or "founder" in ql:
+        return "I was built by **CEO Timothy Okoye**, SS3B Igboukwu! From Okoye Family - Motto: Unity, Wisdom & Progress! 👑 My logo is the blue brain with circuit!"
     if has_brain and client:
         try:
-            completion = client.chat.completions.create(model="llama-3.3-70b-versatile", messages=[{"role": "system", "content": "You are Timôteé däl Ai, built by Timothy Okoye SS3B. If asked about networking, provide assignment."}, {"role": "user", "content": q}])
+            completion = client.chat.completions.create(model="llama-3.3-70b-versatile", messages=[{"role": "system", "content": "You are Timôteé däl Ai, built by CEO Timothy Okoye SS3B Igboukwu. You are proud, royal, helpful. If user asks about networking, show the assignment."}, {"role": "user", "content": q}])
             return completion.choices[0].message.content
-        except:
+        except Exception as e:
             pass
-    return f"Great question! Ask me about 'Computer Networking' to see my SS3B assignment!"
+    return f"You asked: '{q}'. Great question! Type **'Computer Networking'** to see my SS3B assignment for Mrs. Okoye!"
 
 if st.button("🚀 Ask Timôteé däl Ai"):
     if question:
@@ -82,4 +97,4 @@ if st.button("🚀 Ask Timôteé däl Ai"):
         st.rerun()
 
 st.divider()
-st.caption(f"© {datetime.datetime.now().year} Okoye Family | CEO Timothy | Igboukwu 👑")
+st.caption(f"© {datetime.datetime.now().year} Okoye Family | CEO Timothy Okoye | Igboukwu 👑 | Timôteé däl Ai v2.0")
