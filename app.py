@@ -1,6 +1,30 @@
 import streamlit as st
 import datetime
 from groq import Groq
+# --- DOWNLOAD SECTION - CEO FEATURE ---
+st.divider()
+st.markdown("<h3 style='text-align:center; color:#0a3d8f;'>📥 Download Center</h3>", unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.download_button(
+        label="📄 Download Assignment (TXT)",
+        data=NETWORKING_ASSIGNMENT,
+        file_name="Computer_Networking_Assignment_Timothy_SS3B.txt",
+        mime="text/plain"
+    )
+
+with col2:
+    st.download_button(
+        label="🧠 Download My AI Info",
+        data=f"Timôteé däl Ai\nBuilt by CEO Timothy Okoye\nSS3B Igboukwu\nOkoye Family - Unity, Wisdom & Progress\n\nLink: https://qsqvg2srsjpwkoa8tvbb.streamlit.app\n\n{NETWORKING_ASSIGNMENT}",
+        file_name="Timotee_dal_Ai_Info.txt",
+        mime="text/plain"
+    )
+
+st.markdown("<p style='text-align:center;'><b>Share my AI:</b> Just copy the link and send on WhatsApp!</p>", unsafe_allow_html=True)
+st.code("https://qsqvg2srsjpwkoa8tvbb.streamlit.app", language="text")
 
 st.set_page_config(page_title="Timôteé däl Ai", page_icon="🧠", layout="centered")
 
